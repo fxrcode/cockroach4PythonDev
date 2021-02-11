@@ -16,6 +16,44 @@ The application stack consists of the following components:
 
 ## Setup
 
+### Use single-node lcoal cockroachdb
+```
+# fxrc @ popos in ~/Tools [18:55:16] C:130
+$ cockroach start-single-node --insecure
+...
+CockroachDB node starting at 2021-02-11 02:55:42.459646733 +0000 UTC (took 0.1s)
+build:               CCL v20.2.4 @ 2021/01/21 00:08:24 (go1.13.14)
+webui:               http://popos:8080
+sql:                 postgresql://root@popos:26257?sslmode=disable
+RPC client flags:    cockroach <client cmd> --host=popos:26257 --insecure
+logs:                /home/fxrc/Tools/cockroach-data/logs
+temp dir:            /home/fxrc/Tools/cockroach-data/cockroach-temp687873191
+external I/O path:   /home/fxrc/Tools/cockroach-data/extern
+store[0]:            path=/home/fxrc/Tools/cockroach-data
+storage engine:      pebble
+status:              restarted pre-existing node
+clusterID:           f50518bb-b723-4859-85f1-c70762955ee7
+nodeID:              1
+```
+
+### Tried CockroachCloud (beta)
+* failed to import csv:
+```
+tony@free-tier3.aws-us-west-2.cockroachlabs.cloud:26257/movr> IMPORT TABLE movr.vehicles (                                                            
+        id UUID PRIMARY KEY,                                                                                                                          
+        last_longitude FLOAT8,                                                                                                                        
+        last_latitude FLOAT8,                                                                                                                         
+        battery INT8,                                                                                                                                 
+        last_checkin TIMESTAMP,                                                                                                                       
+        in_use BOOL,                                                                                                                                  
+        vehicle_type STRING NOT NULL                                                                                                                  
+    )                                                                                                                                                 
+CSV DATA ('https://cockroach-university-public.s3.amazonaws.com/10000vehicles.csv')                                                                   
+    WITH delimiter = '|';                                                                                                                             
+ERROR: creating importTables: restoring table desc and namespace entries: failed to lookup parent DB 52: RangeIterator failed to seek to /Table/3/1/52
+/2/1: rpc error: code = Unauthenticated desc = requested key /Table/3/1/52/2/1 not fully contained in tenant keyspace /Tenant/7{5-6}
+```
+
 ### Database and Environment Setup
 
 You'll need to connect to a [CockroachCloud](https://cockroachlabs.cloud/) cluster.
