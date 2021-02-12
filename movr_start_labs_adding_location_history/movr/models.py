@@ -22,9 +22,9 @@ class Vehicle(Base):
     # FOR THE LAB, UPDATE THIS CLASS FOR THE NEW SCHEMA
     # THE CLASS DOESN'T MATCH THE CURRENT SCHEMA
     id = Column(UUID)
-    last_longitude = Column(Float)
-    last_latitude = Column(Float)
-    last_checkin = Column(DateTime, default=func.now)
+    # last_longitude = Column(Float)
+    # last_latitude = Column(Float)
+    # last_checkin = Column(DateTime, default=func.now)
     in_use = Column(Boolean)
     vehicle_type = Column(String)
     battery = Column(Integer)
@@ -46,6 +46,13 @@ class LocationHistory(Base):
     # THIS CLASS IS STUBBED OUT. FILL IT IN FOR THE NEW SCHEMA.
     # IT REQUIRES A TABLE NAME AND COLUMN TYPES TO BE DEFINED.
     # HELPFUL DOCUMENTATION: https://docs.sqlalchemy.org/en/13/orm/extensions/declarative/basic_use.html
+    __tablename__ = 'location_history'
+    id = Column(UUID)
+    vehicle_id = Column(UUID, ForeignKey('vehicles.id'))
+    longitude = Column(Float)
+    latitude = Column(Float)
+    ts = Column(DateTime, default=func.now)
+    PrimaryKeyConstraint(id)
 
     def __repr__(self):
         return (("<Vehicle(id='{1}', vehicle_id='{2}', ts='{3}', "
