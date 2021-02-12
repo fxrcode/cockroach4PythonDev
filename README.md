@@ -14,6 +14,31 @@ The application stack consists of the following components:
 - A Flask server that handles requests from client web browsers.
 - HTML templates that define web pages that the Flask server renders.
 
+## new table
+* break original `vehicles` table into 1:many relationship child table: `location_history`.
+    1. update database:
+    ```
+    # Create location_history table
+    CREATE TABLE location_history (
+        id UUID PRIMARY KEY,
+        vehicle_id UUID REFERENCES vehicles(id) ON DELETE CASCADE,  # FK, and parent row delete policy
+        ts TIMESTAMP NOT NULL,
+        longitude FLOAT8 NOT NULL,
+        latitude FLOAT8 NOT NULL
+    );
+
+    # Migrate the data
+    INSERT INTO movr.location_history (id, vehicle_id, ts, longitude, latitude)
+    SELECT gen_random_uuid(), id, last_checkin, last_longitude, last_latitude
+    FROM vehicles;
+
+    # Remove the columns from parent table
+    SET sql_safe_updates = false;
+    ALTER TABLE vehicles DROP COLUMN last_checkin,
+        DROP COLUMN last_longitude,
+        DROP COLUMN last_latitude;
+    ```
+
 ## Setup
 
 ### Use single-node lcoal cockroachdb
