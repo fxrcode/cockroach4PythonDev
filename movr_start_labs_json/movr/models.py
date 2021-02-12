@@ -24,7 +24,8 @@ class Vehicle(Base):
     in_use = Column(Boolean)
     battery = Column(Integer)
     # LAB: MODIFY YOUR SCHEMA HERE
-    vehicle_type = Column(String)
+    # vehicle_type = Column(String)
+    vehicle_info = Column(JSON)
     PrimaryKeyConstraint(id)
 
     def __repr__(self):

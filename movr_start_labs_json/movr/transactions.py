@@ -128,7 +128,8 @@ def add_vehicle_txn(session, longitude, latitude, battery, vehicle_info):
                               in_use=False,
                               battery=battery)
     new_location_history_row = LocationHistory(id=str(location_history_id),
-                                               vehicle_id=str(vehicle_id),
+                                            #    vehicle_id=str(vehicle_id),
+                                                vehicle_json=new_vehicle_row.vehicle_info,
                                                longitude=longitude,
                                                latitude=latitude,
                                                ts=current_time)
