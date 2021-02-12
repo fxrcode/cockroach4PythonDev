@@ -458,7 +458,11 @@ def add_user_txn(session, email, last_name, first_name, phone_numbers):
     # A NEW ROW TO THE `users` TABLE REPRESENTING THE NEWLY REGISTERED USER.
     # YOU MAY WANT TO CONSULT THE SQLALCHEMY DOCUMENTATION FOR THIS METHOD:
     # https://docs.sqlalchemy.org/en/13/orm/session_api.html#sqlalchemy.orm.session.Session.add
-
+    new_user_row = User(email = email,
+                        last_name = last_name,
+                        first_name = first_name,
+                        phone_numbers = phone_numbers)
+    session.add(new_user_row)
     return True
 
 
