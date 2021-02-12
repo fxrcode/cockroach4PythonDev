@@ -28,7 +28,7 @@ class MovR:
         Arguments:
             conn_string {String} -- CockroachDB connection string.
         """
-        self.engine = create_engine(conn_string, convert_unicode=True)
+        self.engine = create_engine(conn_string, convert_unicode=True) # , echo=True)
         self.connection_string = conn_string
         self.max_records = max_records
         self.sessionfactory = sessionmaker(bind=self.engine)
